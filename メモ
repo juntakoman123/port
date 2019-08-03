@@ -1,0 +1,8 @@
+public内に画像を置いて参照する場合にエラーがでた
+<div v-for="result in processedResults" :key="result.id"?>
+ <h5 class="card-title">{{idx}}:{{result.name}}</h5>
+ <img v-bind:src="require('../../../public/' + result.image_name)">
+</div>
+
+繰り返しの中でpublicに何回もアクセスしてrequireすることでヒープメモリーエラーが発生した
+原因がよくわからないので画像参照先を変えた

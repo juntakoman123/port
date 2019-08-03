@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html style="width: 100%; height: 100%;">
+  <head>
+    <title>tweet_app</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body style="width: 100%; height: 100%; background: #f5fbff;">
+    <%= yield %>
+  </body>
+</html>
