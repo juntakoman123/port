@@ -1,6 +1,6 @@
 <template>
 <div>
-  <b-navbar  type="dark" variant="dark" sticky>
+  <b-navbar  type="dark" variant="dark" fixed="top">
     <b-navbar-nav>
       <b-nav-item href="/#/">ホーム</b-nav-item>
       <b-nav-item href="/#/users">ユーザー一覧</b-nav-item>

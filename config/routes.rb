@@ -1,13 +1,28 @@
 Rails.application.routes.draw do
 
-  get 'sessions/login' #ログイン画面
-  post 'sessions' => 'sessions#create'
-  resources :signups,only: [ :new, :create] # 新規登録ページ
-  get 'registrations/new' # ホーム
-  root to: 'tweets#index' # ルート
 
+#ログイン画面
+  get 'sessions/login'
+  post 'sessions' => 'sessions#create'
+
+# 新規登録ページ
+  resources :signups,only: [ :new, :create]
+
+#  ホーム
+  root to: 'tweets#index'
+
+# 非ログイン時のホーム
+  get 'registrations/new'
+
+# user
   namespace :api, {format: 'json'} do
-      resources :users, only: [:index, :show,:create,:update]
+      resources :users, only: [:index,:show,:create,:update]
   end
+
+# tweet
+  namespace :api, {format: 'json'} do
+    resources :tweets, only: [:index,:create,:destroy]
+  end
+
 
 end
