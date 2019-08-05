@@ -40,8 +40,20 @@
 
   <div class="tweet_main">
 
-    <div v-for="tweet in tweets" :key="tweet.id" class="tweet_item">
-    {{ tweet.content }}
+    <div v-for="tweet in processedResults" :key="tweet.id" class="tweet_item">
+    <div>
+      <div class="user_image">
+        <img :src="require('../images/' + tweet.user_image_name)" class="user_image_item">
+      </div>
+      <div class="right_content">
+        <div class="user_name">
+          <router-link :to="{ name: 'UsersShow', params: { id: tweet.user_id } }" style="color: black; font-weight: bold;">{{ tweet.user_name }}</router-link>
+        </div>
+        <div class="tweet_content">
+          {{tweet.content}}
+        </div>
+      </div>
+    </div>
     </div>
   </div>
 
@@ -72,9 +84,13 @@ export default {
   },
   computed: {
     processedResults: function() {
-      let results = this.users;
+      let results = this.tweets
       for (let i = 0; i < results.length; i++) {
-        results[i].url = ('/#/users/' + results[i].id)
+        var found = this.users.find(function(el) {
+          return el.id === results[i].user_id
+        })
+        results[i].user_name = found.name;
+        results[i].user_image_name = found.image_name
       }
       return results;
     }
@@ -102,7 +118,7 @@ export default {
 .item {
   width: 300px;
   height: 300px;
-  border: 5px solid #f5fbff;
+  border: 5px solid #ffeeba;
   background-color: #fff;
   position: relative;
   float: left;
@@ -163,13 +179,32 @@ p {
 .tweet_item {
   background-color: white;
   border: 1px solid #f5fbff;
-
+  position: relative;
 }
 
 .tweet_item:hover{
-  background-color : #ebedef;
+  background-color: #ebedef;
 }
 
+.user_image_item {
+  width: 60px;
+}
+
+.user_image {
+  position: absolute;
+}
+
+.right_content {
+  margin-left: 70px;
+  width: 500px;
+  word-break: break-all;
+}
+
+.tweet_content {
+  margin-bottom: 10px;
+  text-indent: -0.25em;
+
+}
 
 
 

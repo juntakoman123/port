@@ -17,6 +17,7 @@ import UsersLikePage from './components/UsersLikePage.vue'
 import UsersShowPage from './components/UsersShowPage.vue'
 import UsersFollowingPage from './components/UsersFollowingPage.vue'
 import UsersFollowersPage from './components/UsersFollowersPage.vue'
+import Setting from './components/Setting.vue'
 
 const router = new VueRouter({
   routes: [

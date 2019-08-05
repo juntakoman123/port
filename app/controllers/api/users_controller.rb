@@ -16,10 +16,10 @@ class Api::UsersController < ActionController::API
   end
 
   def create
-    user = user.new(user_params)
+    user = User.new(name: params[:name],password: params[:pass],email: params[:email])
     user.image_name = "default.png"
     if user.save
-      redirect_to("/")
+      render json: user, status: :created
     else
       render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
     end
@@ -49,7 +49,7 @@ private
   end
 
   def user_params
-    params.fetch(:user, {}).permit(:name, :password, :email) # {}はデフォルト
+    params.fetch(:user, {}).permit(:name, :pass, :email) # {}はデフォルト
   end
 
   def render_status_500(exception)
