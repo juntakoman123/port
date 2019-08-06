@@ -1,11 +1,6 @@
 <template>
-
-<div>
-
-
-
-
-<div class="marge">
+  <div>
+    <div class="marge">
 
 
 
@@ -38,9 +33,10 @@
   </div>
 
 
+
   <div class="tweet_main">
 
-    <div v-for="tweet in processedResults" :key="tweet.id" class="tweet_item">
+    <div v-for="tweet in tweets" :key="tweet.id" class="tweet_item">
     <div>
       <div class="user_image">
         <img :src="require('../images/' + tweet.user_image_name)" class="user_image_item">
@@ -74,31 +70,14 @@ import axios from 'axios'
 export default {
   data: function () {
     return {
-      users: [],
       tweets: []
+
     }
   },
   mounted () {
-    this.updateUsers();
     this.updateTweets();
   },
-  computed: {
-    processedResults: function() {
-      let results = this.tweets
-      for (let i = 0; i < results.length; i++) {
-        var found = this.users.find(function(el) {
-          return el.id === results[i].user_id
-        })
-        results[i].user_name = found.name;
-        results[i].user_image_name = found.image_name
-      }
-      return results;
-    }
-  },
-  methods: {
-    updateUsers: function() {
-      axios.get('/api/users.json').then(response => (this.users = response.data))
-    },
+    methods: {
     updateTweets: function() {
       axios.get('/api/tweets.json').then(response => (this.tweets = response.data))
     }

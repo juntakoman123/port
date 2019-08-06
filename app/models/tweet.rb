@@ -1,4 +1,6 @@
 class Tweet < ApplicationRecord
+
+
   belongs_to :user #userモデルに所属する
   has_many :favorites　#　複数のおきにいりをもっている
 

@@ -1,7 +1,6 @@
 <template>
   <div class="userscontainer">
     <div v-for="(result) in processedResults" :key="result.id" class="item">
-
          <img v-bind:src="require('../images/' + result.image_name)" class="image_test">
           <b-button variant="outline-primary" pill　class="button_test">フォローする</b-button>
          <div class="name">

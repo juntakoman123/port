@@ -6,8 +6,15 @@ class Api::TweetsController < ActionController::API
   end
 
   def index
-    tweets = Tweet.select(:content, :user_id, :created_at, :id)
-    render json: tweets
+    i = 0
+    a = []
+    t = Tweet.all
+    while i < Tweet.all.length
+      a[i] = {id: t[i].id, content: t[i].content, user_id: t[i].user_id,created_at: t[i].created_at, user_name: t[i].user.name,
+      user_image_name: t[i].user.image_name}
+      i = i + 1 # iの更新
+    end
+    render json: a
   end
 
   def create
