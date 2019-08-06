@@ -45,7 +45,6 @@
     </div>
     </b-form>
   </div>
-
 </template>
 
 <script>
@@ -81,9 +80,7 @@ export default {
     }
   }
 }
-
 </script>
-
 <style scoped>
 p{
   font-size: 2em;
@@ -103,5 +100,4 @@ p{
 .right {
   margin-left: 220px;
 }
-
 </style>

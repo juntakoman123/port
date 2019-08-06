@@ -37,12 +37,10 @@ const router = new VueRouter({
     { path: '/users/:id(\\d+)/followers',
       name: 'UsersFollowers',
       component: UsersFollowersPage}
-
   ]
 })
 
 Vue.use(VueRouter)
-
 export default {
   router,
   components: {

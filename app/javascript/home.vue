@@ -55,7 +55,6 @@ export default {
   }
 }
 </script>
-
 <style scoped>
 p{
   font-size: 3em;
