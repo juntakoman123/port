@@ -4,9 +4,10 @@ Rails.application.routes.draw do
 #ログイン画面
   get 'sessions/login'
   post 'sessions' => 'sessions#create'
+  delete 'sessions' => 'sessions#destroy'
 
 # 新規登録ページ
-  resources :signups,only: [ :new, :create]
+  resources :signups,only: [:new]
 
 #  ホーム
   root to: 'tweets#index'

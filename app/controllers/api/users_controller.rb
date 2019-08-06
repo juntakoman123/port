@@ -19,7 +19,7 @@ class Api::UsersController < ActionController::API
     user = User.new(name: params[:name],password: params[:pass],email: params[:email])
     user.image_name = "default.png"
     if user.save
-      render json: user, status: :created
+      head :created
     else
       render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
     end

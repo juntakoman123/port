@@ -16,7 +16,7 @@
         <b-nav-item-dropdown right>
           <template slot="button-content"><em>User</em></template>
           <b-dropdown-item href="#">プロフィール</b-dropdown-item>
-          <b-dropdown-item href="/">サインアウト</b-dropdown-item>
+          <b-dropdown-item href="/registrations/new" v-on:click="logout">サインアウト</b-dropdown-item>
         </b-nav-item-dropdown>
     </b-navbar-nav>
   </b-navbar>
@@ -32,6 +32,9 @@ export default {
   methods: {
     test: function () {
       this.$emit('test')
+    },
+    logout: function () {
+      axios.delete('/sessions').then(response => console.log("logout"))
     }
   }
 }
