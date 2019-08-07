@@ -67,9 +67,7 @@ export default {
     createUser: function() {
       axios.post('/api/users', this.user)
         .then(response => {
-          let e = response.data;
-          location.href = "/";
-          console.log(e);
+          location.href = "/"
         })
         .catch(error => {
           console.error(error);

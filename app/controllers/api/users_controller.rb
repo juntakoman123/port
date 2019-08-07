@@ -1,4 +1,8 @@
 class Api::UsersController < ActionController::API
+
+  def form_authenticity_token # エラー回避
+  end
+
   before_action :set_user, only: [:show,:update]
 
   rescue_from Exception, with: :render_status_500
@@ -19,8 +23,8 @@ class Api::UsersController < ActionController::API
     user = User.new(name: params[:name],password: params[:pass],email: params[:email])
     user.image_name = "default.png"
     if user.save
-      login(user.email, user.password)
-      puts "ログイン成功"
+      login(params[:email], params[:pass] )
+      puts logged_in?
       head :created
     else
       render json: { errors: user.errors.full_messages }, status: :unprocessable_entity

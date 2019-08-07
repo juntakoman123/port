@@ -27,6 +27,9 @@ api側で送るデータをまとめればhttp通信は一度で済むからそ�
 
 sorceryのloginメソッドが　ページレンダリングのloginとかぶってて上書きされてた
 
+loginメソッドが肝だなと　明らかに渡してるものが同じものなのに エラーの分岐になる
+params[:email] と　保存された後の　user.passwordは同じでしょ？
+
 
 
 Anime.vue は完成
