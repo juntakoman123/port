@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <b-form @submit="createSession()">
+    <b-form @submit.prevent="createSession()">
       <div v-if="errors.length != 0">
         <ul v-for="e in errors" :key="e">
           <li><font color="red">{{ e }}</font></li>

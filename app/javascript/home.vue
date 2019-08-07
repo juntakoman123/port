@@ -7,7 +7,7 @@
         v-on:click="addSpinner()"
         pill
         variant="outline-primary"
-        href="/sessions/login">
+        href="/sessions/new">
         ログイン
       </b-button>
       <b-button

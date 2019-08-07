@@ -19,6 +19,8 @@ class Api::UsersController < ActionController::API
     user = User.new(name: params[:name],password: params[:pass],email: params[:email])
     user.image_name = "default.png"
     if user.save
+      login(user.email, user.password)
+      puts "ログイン成功"
       head :created
     else
       render json: { errors: user.errors.full_messages }, status: :unprocessable_entity

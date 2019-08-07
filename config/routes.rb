@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
 
 #ログイン画面
-  get 'sessions/login'
+  get 'sessions/new'
   post 'sessions' => 'sessions#create'
   delete 'sessions' => 'sessions#destroy'
 
