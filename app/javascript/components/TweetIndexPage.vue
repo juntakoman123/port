@@ -2,27 +2,27 @@
   <div>
     <div class="marge">
       <div class="item">
-        <img v-bind:src="require('../images/' + 'default.png')" class="image_test">
+        <img :src="require('../images/' + login_user.image_name)" class="image_test">
         <div class="name">
-          <router-link :to="{ name: 'UsersShow', params: { id: 1 } }" style="color: black;" >1</router-link>
+          <router-link :to="{ name: 'UsersShow', params: { id: login_user.id } }" style="color: black;" >{{ login_user.name }}</router-link>
         </div>
         <div class="number_item">
           <div class="left">
             <p>ツイート</p>
             <div class="big">
-              <router-link :to="{ name: 'UsersShow', params: { id: 1 } }" >1</router-link>
+              <router-link :to="{ name: 'UsersShow', params: { id: login_user.id } }" >{{ login_user.tweets_count }}</router-link>
             </div>
           </div>
           <div class="middle">
             <p>フォロー</p>
             <div class="big">
-              <router-link :to="{ name: 'UsersFollowing', params: { id: 1 } }" >1</router-link>
+              <router-link :to="{ name: 'UsersFollowing', params: { id: login_user.id} }" >1</router-link>
             </div>
           </div>
           <div class="right">
             <p>フォロワー</p>
             <div class="big">
-              <router-link :to="{ name: 'UsersFollowers', params: { id: 1 } }" >1</router-link>
+              <router-link :to="{ name: 'UsersFollowers', params: { id: login_user.id } }" >1</router-link>
             </div>
           </div>
         </div>
@@ -54,7 +54,9 @@ import axios from 'axios'
 export default {
   data: function () {
     return {
-      tweets: []
+      tweets: [],
+      login_user: {}
+
     }
   },
   mounted () {
@@ -62,7 +64,7 @@ export default {
   },
     methods: {
     updateTweets: function() {
-      axios.get('/api/tweets.json').then(response => (this.tweets = response.data))
+      axios.get('/api/tweets.json').then(response => {(this.tweets = response.data[0]);this.login_user = response.data[1]})
     }
   }
 }

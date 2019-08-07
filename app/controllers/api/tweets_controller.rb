@@ -14,7 +14,10 @@ class Api::TweetsController < ActionController::API
       user_image_name: t[i].user.image_name}
       i = i + 1 # iの更新
     end
-    render json: a
+    
+    count = Tweet.all.where(user_id: current_user.id).count
+    user = {name: current_user.name, image_name: current_user.image_name,tweets_count: count,id: current_user.id}
+    render json: [a,user]
   end
 
   def create
