@@ -12,7 +12,7 @@ class Api::TweetsController < ActionController::API
     while i < Tweet.all.length
 
       a[i] = {id: t[i].id, content: t[i].content, user_id: t[i].user_id,created_at: t[i].created_at, user_name: t[i].user.name,
-      user_image_name: t[i].user.image_name,fav: "far",fad: true}
+      user_image_name: t[i].user.image_name,fav: "far"}
       a[i][:fav] = "fas" if Favorite.find_by(user_id: current_user,tweet_id: a[i][:id])
       favo_num = Favorite.where(tweet_id: a[i][:id]).count
       a[i][:favo_num] = favo_num

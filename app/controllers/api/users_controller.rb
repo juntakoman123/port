@@ -15,6 +15,24 @@ class Api::UsersController < ActionController::API
     render json: users
   end
 
+  def index
+    i = 0
+    a = []
+    u = User.all
+    while i < User.all.length
+      a[i] = {id: u[i].id, user_name: u[i].name,user_image_name: u[i].image_name,fd: "no_follow"}
+      a[i][:fd] = "followed" if Follow.find_by(follower_id: current_user,inverse_follower_id: a[i][:id])
+      tweet_num = Tweet.where(user_id: a[i][:id]).count
+      a[i][:tweet_num] = tweet_num
+      follow_num = Follow.where(follower_id: a[i][:id]).count
+      a[i][:follow_num] = follow_num
+      follower_num = Follow.where(inverse_follower_id: a[i][:id]).count
+      a[i][:follower_num] = follower_num
+      i = i + 1
+    end
+    render json: a
+  end
+
   def show
     render json: @user
   end
