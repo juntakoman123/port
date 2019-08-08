@@ -21,7 +21,10 @@ class Api::TweetsController < ActionController::API
 
 
     count = Tweet.all.where(user_id: current_user.id).count
-    user = {name: current_user.name, image_name: current_user.image_name,tweets_count: count,id: current_user.id}
+    follow_num = Follow.where(follower_id: current_user.id).count
+    follower_num = Follow.where(inverse_follower_id: current_user.id).count
+    user = {name: current_user.name, image_name: current_user.image_name,tweets_count: count,id: current_user.id,
+    follow_num: follow_num,follower_num: follower_num}
     render json: [a,user]
   end
 

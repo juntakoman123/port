@@ -16,13 +16,13 @@
           <div class="middle">
             <p>フォロー</p>
             <div class="big">
-              <router-link :to="{ name: 'UsersFollowing', params: { id: login_user.id} }" >1</router-link>
+              <router-link :to="{ name: 'UsersFollowing', params: { id: login_user.id} }" >{{login_user.follow_num}}</router-link>
             </div>
           </div>
           <div class="right">
             <p>フォロワー</p>
             <div class="big">
-              <router-link :to="{ name: 'UsersFollowers', params: { id: login_user.id } }" >1</router-link>
+              <router-link :to="{ name: 'UsersFollowers', params: { id: login_user.id } }" >{{login_user.follower_num}}</router-link>
             </div>
           </div>
         </div>
