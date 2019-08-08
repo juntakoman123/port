@@ -41,6 +41,7 @@
               <div class="tweet_content">
                 {{tweet.content}}
               </div>
+              <span class="fa-heart" :class="tweet.fav" v-on:click="addFavo(tweet.id)"></span>
             </div>
           </div>
         </div>
@@ -56,7 +57,6 @@ export default {
     return {
       tweets: [],
       login_user: {}
-
     }
   },
   mounted () {
@@ -65,6 +65,16 @@ export default {
     methods: {
     updateTweets: function() {
       axios.get('/api/tweets.json').then(response => {(this.tweets = response.data[0]);this.login_user = response.data[1]})
+    },
+    addFavo: function(tweet_id) {
+      axios.post('/api/favorites', {id: tweet_id})
+      .then(response => {
+        console.log("ok");
+        this.updateTweets();
+      })
+      .catch(error => {
+        console.error(error)
+      })
     }
   }
 }
@@ -147,5 +157,14 @@ p {
 .tweet_content {
   margin-bottom: 10px;
   text-indent: -0.25em;
+}
+.far{
+  color: #c5c5c5;
+}
+.far:hover{
+  color: #fd6e8e;
+}
+.fas {
+  color: #fd6e8e;
 }
 </style>

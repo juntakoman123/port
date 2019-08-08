@@ -10,11 +10,14 @@ class Api::TweetsController < ActionController::API
     a = []
     t = Tweet.all
     while i < Tweet.all.length
+
       a[i] = {id: t[i].id, content: t[i].content, user_id: t[i].user_id,created_at: t[i].created_at, user_name: t[i].user.name,
-      user_image_name: t[i].user.image_name}
-      i = i + 1 # iの更新
+      user_image_name: t[i].user.image_name,fav: "far"}
+      a[i][:fav] = "fas" if Favorite.find_by(user_id: current_user,tweet_id: a[i][:id])
+      i = i + 1
     end
-    
+
+
     count = Tweet.all.where(user_id: current_user.id).count
     user = {name: current_user.name, image_name: current_user.image_name,tweets_count: count,id: current_user.id}
     render json: [a,user]

@@ -25,5 +25,10 @@ Rails.application.routes.draw do
     resources :tweets, only: [:index,:create,:destroy]
   end
 
+# いいね
+  namespace :api, {format: 'json'} do
+    resources :favorites, only: [:create,:destroy]
+  end
+
 
 end
