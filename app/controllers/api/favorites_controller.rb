@@ -9,7 +9,7 @@ class Api::FavoritesController < ActionController::API
   end
 
     def destroy
-      favorite = Favorite.find_by(user_id: current_user.id, tweet_id: params[:xxxx])
+      favorite = Favorite.find_by(user_id: current_user.id, tweet_id: params[:id])
       favorite.destroy
       head :no_content
     end

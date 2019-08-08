@@ -41,7 +41,8 @@
               <div class="tweet_content">
                 {{tweet.content}}
               </div>
-              <span class="fa-heart" :class="tweet.fav" v-on:click="addFavo(tweet.id)"></span>
+              <span v-if="tweet.fav === 'far'"class="fa-heart" :class="tweet.fav" v-on:click="addFavo(tweet.id)"> {{tweet.favo_num}}</span>
+              <span v-if="tweet.fav === 'fas'" class="fa-heart" :class="tweet.fav" v-on:click="deleteFavo(tweet.id)"> {{tweet.favo_num}}</span>
             </div>
           </div>
         </div>
@@ -51,6 +52,7 @@
 </template>
 
 <script>
+
 import axios from 'axios'
 export default {
   data: function () {
@@ -70,6 +72,16 @@ export default {
       axios.post('/api/favorites', {id: tweet_id})
       .then(response => {
         console.log("ok");
+        this.updateTweets();
+      })
+      .catch(error => {
+        console.error(error)
+      })
+    },
+    deleteFavo: function(tweet_id) {
+      axios.delete(`/api/favorites/${tweet_id}`)
+      .then(response => {
+        console.log("delete");
         this.updateTweets();
       })
       .catch(error => {
@@ -160,11 +172,18 @@ p {
 }
 .far{
   color: #c5c5c5;
+  font-size: 15px;
 }
 .far:hover{
   color: #fd6e8e;
+  cursor : pointer;
 }
 .fas {
   color: #fd6e8e;
+  font-size: 15px;
+  cursor : pointer;
+}
+.span {
+  float: left;
 }
 </style>
