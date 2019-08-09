@@ -1,28 +1,29 @@
 <template>
   <div class="userscontainer">
-    <div v-for="(result) in processedResults" :key="result.id" class="item">
-         <img v-bind:src="require('../images/' + result.image_name)" class="image_test">
-          <b-button variant="outline-primary" pill　class="button_test">フォローする</b-button>
+    <div v-for="(result) in users" :key="result.id" class="item">
+         <img v-bind:src="require('../images/' + result.user_image_name)" class="image_test">
+          <b-button variant="outline-primary" pill　class="button_test" v-on:click="follow(result.id)" v-if="result.fd === 'no_follow'">フォローする</b-button>
+          <b-button variant="primary" pill　class="button_test" v-on:click="remove(result.id)" v-if="result.fd === 'followed'" v-b-tooltip.hover.v-danger title="フォロー解除">{{ text }}</b-button>
          <div class="name">
-          <router-link :to="{ name: 'UsersShow', params: { id: result.id } }" style="color: black;" >{{ result.name }}</router-link>
+          <router-link :to="{ name: 'UsersShow', params: { id: result.id } }" style="color: black;" >{{ result.user_name }}</router-link>
          </div>
          <div class="number_item">
           <div class="left">
             <p>ツイート</p>
             <div class="big">
-              <router-link :to="{ name: 'UsersShow', params: { id: result.id } }" >{{ result.id }}</router-link>
+              <router-link :to="{ name: 'UsersShow', params: { id: result.id } }" >{{ result.tweet_num }}</router-link>
             </div>
           </div>
           <div class="middle">
             <p>フォロー</p>
             <div class="big">
-              <router-link :to="{ name: 'UsersFollowing', params: { id: result.id } }" >{{ result.id }}</router-link>
+              <router-link :to="{ name: 'UsersFollowing', params: { id: result.id } }" >{{ result.follow_num }}</router-link>
             </div>
           </div>
           <div class="right">
             <p>フォロワー</p>
             <div class="big">
-              <router-link :to="{ name: 'UsersFollowers', params: { id: result.id } }" >{{ result.id }}</router-link>
+              <router-link :to="{ name: 'UsersFollowers', params: { id: result.id } }" >{{ result.follower_num }}</router-link>
             </div>
           </div>
         </div>
@@ -35,24 +36,39 @@ import axios from 'axios'
 export default {
   data: function () {
     return {
-      users: []
+      users: [],
+      text: "フォロー中"
     }
   },
   mounted () {
     this.updateUsers()
   },
-  computed: {
-    processedResults: function() {
-      let results = this.users;
-      for (let i = 0; i < results.length; i++) {
-        results[i].url = ('/#/users/' + results[i].id)
-      }
-      return results;
-    }
-  },
   methods: {
     updateUsers: function() {
-      axios.get('/api/users.json').then(response => (this.users = response.data))
+      axios.get(`/api/followings/${this.$route.params.id}.json`).then(response => (this.users = response.data))
+    },
+    follow: function(user_id) {
+      axios.post('/api/follows', {id: user_id})
+      .then(response => {
+        console.log("ok");
+        this.updateUsers();
+      })
+      .catch(error => {
+        console.error(error)
+      })
+    },
+    remove: function(user_id) {
+      axios.delete(`/api/follows/${user_id}`)
+      .then(response => {
+        console.log("delete");
+        this.updateUsers();
+      })
+      .catch(error => {
+        console.error(error)
+      })
+    },
+    changeText: function() {
+      this.text = "フォロー解除"
     }
   }
 }

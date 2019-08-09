@@ -35,4 +35,16 @@ Rails.application.routes.draw do
     resources :follows, only: [:create,:destroy]
   end
 
+  # フォロー一覧
+  namespace :api, {format: 'json'} do
+    resources :followings, only: [:show]
+  end
+
+  # フォロワー一覧
+  namespace :api, {format: 'json'} do
+    resources :followers, only: [:show]
+  end
+
+
+
 end

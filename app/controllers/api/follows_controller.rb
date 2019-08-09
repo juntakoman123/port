@@ -15,4 +15,6 @@ class Api::FollowsController < ActionController::API
     follow.delete
     head :no_content
   end
+
+
 end
