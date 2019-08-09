@@ -3,12 +3,8 @@
     <div class="marge">
       <div class="item">
         <img :src="require('../images/' + show_user.image_name)" class="image_test">
-
         <b-button variant="outline-primary" pill　class="button_test" v-on:click="follow(show_user.id)" v-if="show_user.fd === 'no_follow'">フォローする</b-button>
         <b-button variant="primary" pill　class="button_test" v-on:click="remove(show_user.id)" v-if="show_user.fd === 'followed'"  v-b-tooltip.hover.v-danger title="フォロー解除">{{ text }}</b-button>
-
-
-
         <div class="name">
           <router-link :to="{ name: 'UsersShow', params: { id: show_user.id } }" style="color: black;" >{{ show_user.name }}</router-link>
         </div>

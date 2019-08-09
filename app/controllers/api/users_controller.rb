@@ -48,7 +48,7 @@ class Api::UsersController < ActionController::API
     user = {name: @user.name, image_name: @user.image_name,tweets_count: count,id: @user.id,
     follow_num: follow_num,follower_num: follower_num,fd: "no_follow"}
     user[:fd] = "followed" if Follow.find_by(follower_id: current_user,inverse_follower_id: user[:id])
-    user[:fd] = "own" if @user.id = current_user.id
+    user[:fd] = "own" if @user.id == current_user.id
     render json: [a,user]
   end
 
