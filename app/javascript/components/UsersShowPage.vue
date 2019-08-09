@@ -1,29 +1,34 @@
-
 <template>
   <div>
     <div class="marge">
       <div class="item">
-        <img v-bind:src="require('../images/' + login_user.image_name)" class="image_test">
+        <img :src="require('../images/' + show_user.image_name)" class="image_test">
+
+        <b-button variant="outline-primary" pill　class="button_test" v-on:click="follow(show_user.id)" v-if="show_user.fd === 'no_follow'">フォローする</b-button>
+        <b-button variant="primary" pill　class="button_test" v-on:click="remove(show_user.id)" v-if="show_user.fd === 'followed'"  v-b-tooltip.hover.v-danger title="フォロー解除">{{ text }}</b-button>
+
+
+
         <div class="name">
-          <router-link :to="{ name: 'UsersShow', params: { id: login_user.id } }" style="color: black;" >{{ login_user.name }}</router-link>
+          <router-link :to="{ name: 'UsersShow', params: { id: show_user.id } }" style="color: black;" >{{ show_user.name }}</router-link>
         </div>
         <div class="number_item">
           <div class="left">
             <p>ツイート</p>
             <div class="big">
-              <router-link :to="{ name: 'UsersShow', params: { id: login_user.id } }" >1</router-link>
+              <router-link :to="{ name: 'UsersShow', params: { id: show_user.id } }" >{{ show_user.tweets_count }}</router-link>
             </div>
           </div>
           <div class="middle">
             <p>フォロー</p>
             <div class="big">
-              <router-link :to="{ name: 'UsersFollowing', params: { id: login_user.id} }" >1</router-link>
+              <router-link :to="{ name: 'UsersFollowing', params: { id: show_user.id} }" >{{show_user.follow_num}}</router-link>
             </div>
           </div>
           <div class="right">
             <p>フォロワー</p>
             <div class="big">
-              <router-link :to="{ name: 'UsersFollowers', params: { id: login_user.id } }" >1</router-link>
+              <router-link :to="{ name: 'UsersFollowers', params: { id: show_user.id } }" >{{show_user.follower_num}}</router-link>
             </div>
           </div>
         </div>
@@ -42,6 +47,8 @@
               <div class="tweet_content">
                 {{tweet.content}}
               </div>
+              <span v-if="tweet.fav === 'far'"class="fa-heart" :class="tweet.fav" v-on:click="addFavo(tweet.id)"> {{tweet.favo_num}}</span>
+              <span v-else  class="fa-heart" :class="tweet.fav" v-on:click="deleteFavo(tweet.id)"> {{tweet.favo_num}}</span>
             </div>
           </div>
         </div>
@@ -51,13 +58,14 @@
 </template>
 
 <script>
+
 import axios from 'axios'
 export default {
   data: function () {
     return {
       tweets: [],
-      login_user: {}
-
+      show_user: {},
+      text: "フォロー中"
     }
   },
   mounted () {
@@ -65,8 +73,52 @@ export default {
   },
     methods: {
     updateTweets: function() {
-      axios.get('/api/tweets.json').then(response => {(this.tweets = response.data[0]); this.login_user = response.data[1]})
+      axios.get(`/api/users/${this.$route.params.id}.json`).then(response => {(this.tweets = response.data[0]);this.show_user = response.data[1]})
+    },
+    addFavo: function(tweet_id) {
+      axios.post('/api/favorites', {id: tweet_id})
+      .then(response => {
+        console.log("ok");
+        this.updateTweets();
+      })
+      .catch(error => {
+        console.error(error)
+      })
+    },
+    deleteFavo: function(tweet_id) {
+      axios.delete(`/api/favorites/${tweet_id}`)
+      .then(response => {
+        console.log("delete");
+        this.updateTweets();
+      })
+      .catch(error => {
+        console.error(error)
+      })
+    },
+    follow: function(user_id) {
+      axios.post('/api/follows', {id: user_id})
+      .then(response => {
+        console.log("ok");
+        this.updateTweets();
+      })
+      .catch(error => {
+        console.error(error)
+      })
+    },
+    remove: function(user_id) {
+      axios.delete(`/api/follows/${user_id}`)
+      .then(response => {
+        console.log("delete");
+        this.updateTweets();
+      })
+      .catch(error => {
+        console.error(error)
+      })
+    },
+    changeText: function() {
+      this.text = "フォロー解除"
     }
+
   }
 }
 </script>
@@ -85,6 +137,11 @@ export default {
   position: relative;
   float: left;
   margin-left: 260px;
+}
+.button_test {
+  position: absolute;
+  right: 12px;
+  bottom: 192px;
 }
 .name {
   margin-left: 10px;
@@ -148,5 +205,21 @@ p {
 .tweet_content {
   margin-bottom: 10px;
   text-indent: -0.25em;
+}
+.far{
+  color: #c5c5c5;
+  font-size: 15px;
+}
+.far:hover{
+  color: #fd6e8e;
+  cursor : pointer;
+}
+.fas {
+  color: #fd6e8e;
+  font-size: 15px;
+  cursor : pointer;
+}
+.span {
+  float: left;
 }
 </style>

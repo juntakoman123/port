@@ -11,11 +11,6 @@ class Api::UsersController < ActionController::API
   end
 
   def index
-    users = User.select(:id, :name, :image_name)
-    render json: users
-  end
-
-  def index
     i = 0
     a = []
     u = User.where.not(id: current_user.id)
@@ -34,7 +29,27 @@ class Api::UsersController < ActionController::API
   end
 
   def show
-    render json: @user
+    i = 0
+    a = []
+    u = Tweet.where(user_id: params[:id])
+    while i < u.length
+      a[i] = {id: u[i].id, content: u[i].content, user_id: u[i].user_id,created_at: u[i].created_at, user_name: u[i].user.name,
+      user_image_name: u[i].user.image_name,fav: "far"}
+      a[i][:fav] = "fas" if Favorite.find_by(user_id: current_user,tweet_id: a[i][:id])
+      favo_num = Favorite.where(tweet_id: a[i][:id]).count
+      a[i][:favo_num] = favo_num
+      i = i + 1
+    end
+
+    count = Tweet.where(user_id: params[:id]).count
+    follow_num = Follow.where(follower_id: params[:id]).count
+    follower_num = Follow.where(inverse_follower_id: params[:id]).count
+    @user = User.find_by(id: params[:id])
+    user = {name: @user.name, image_name: @user.image_name,tweets_count: count,id: @user.id,
+    follow_num: follow_num,follower_num: follower_num,fd: "no_follow"}
+    user[:fd] = "followed" if Follow.find_by(follower_id: current_user,inverse_follower_id: user[:id])
+    user[:fd] = "own" if @user.id = current_user.id
+    render json: [a,user]
   end
 
   def create
