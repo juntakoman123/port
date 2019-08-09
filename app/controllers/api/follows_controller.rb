@@ -1,7 +1,7 @@
 class Api::FollowsController < ActionController::API
 
   def create
-
+    return if params[:id] == current_user.id
     follow = Follow.new(follower_id: current_user.id,inverse_follower_id: params[:id])
     if follow.save
       head :created
