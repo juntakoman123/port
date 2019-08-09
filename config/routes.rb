@@ -45,6 +45,18 @@ Rails.application.routes.draw do
     resources :followers, only: [:show]
   end
 
+  # 設定画面
+  namespace :api, {format: 'json'} do
+    resources :settings, only: [:index]
+  end
+
+  namespace :api, {format: 'json'} do
+    patch "settings" => "settings#update"
+  end
+
+
+
+
 
 
 end

@@ -36,7 +36,10 @@ const router = new VueRouter({
       component: UsersFollowingPage},
     { path: '/users/:id(\\d+)/followers',
       name: 'UsersFollowers',
-      component: UsersFollowersPage}
+      component: UsersFollowersPage},
+    { path: '/setting',
+      name: 'Setting',
+      component: Setting}
   ]
 })
 

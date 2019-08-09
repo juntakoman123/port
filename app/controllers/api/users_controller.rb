@@ -64,22 +64,7 @@ class Api::UsersController < ActionController::API
     end
   end
 
-  def update
-    if params[:image]
-      @user.image_name = "#{@user.id}.png"
-      image = params[:image]
-      File.binwrite("public/user_images/#{@user.image_name}",image.read)
-    end
-
-    @user.name = params[:name]
-
-    if @user.save
-      head :no_content
-    else
-      render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
-    end
-  end
-
+  
 
 private
 

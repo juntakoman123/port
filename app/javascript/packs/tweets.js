@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(BootstrapVue)
 
+
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
     render: h => h(App)

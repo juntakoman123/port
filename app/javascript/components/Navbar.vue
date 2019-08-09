@@ -15,7 +15,7 @@
       </b-button>
         <b-nav-item-dropdown right>
           <template slot="button-content"><em>User</em></template>
-          <b-dropdown-item href="#">プロフィール</b-dropdown-item>
+          <b-dropdown-item href="/#/setting">プロフィール</b-dropdown-item>
           <b-dropdown-item v-on:click="logout">サインアウト</b-dropdown-item>
         </b-nav-item-dropdown>
     </b-navbar-nav>
