@@ -27,7 +27,7 @@ Rails.application.routes.draw do
 
 # いいね
   namespace :api, {format: 'json'} do
-    resources :favorites, only: [:create,:destroy]
+    resources :favorites, only: [:create,:destroy,:show]
   end
 
 # フォロー機能

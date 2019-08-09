@@ -4,7 +4,8 @@
       <div class="item">
         <img :src="require('../images/' + show_user.image_name)" class="image_test">
         <b-button variant="outline-primary" pill　class="button_test" v-on:click="follow(show_user.id)" v-if="show_user.fd === 'no_follow'">フォローする</b-button>
-        <b-button variant="primary" pill　class="button_test" v-on:click="remove(show_user.id)" v-if="show_user.fd === 'followed'"  v-b-tooltip.hover.v-danger title="フォロー解除">{{ text }}</b-button>
+        <b-button variant="primary" pill　class="button_test3" v-on:click="remove(show_user.id)" v-if="show_user.fd === 'followed'"  v-b-tooltip.hover.v-danger title="フォロー解除">{{ text }}</b-button>
+        <b-button variant="outline-warning" pill　class="button_test2" :class="show_user.fd" :href="'/#/users/' + show_user.id + '/likes'">お気に入り</b-button>
         <div class="name">
           <router-link :to="{ name: 'UsersShow', params: { id: show_user.id } }" style="color: black;" >{{ show_user.name }}</router-link>
         </div>
@@ -137,7 +138,17 @@ export default {
 .button_test {
   position: absolute;
   right: 12px;
-  bottom: 192px;
+  bottom: 220px;
+}
+.button_test2 {
+  position: absolute;
+  right: 22px;
+  bottom: 170px;
+}
+.button_test3 {
+  position: absolute;
+  right: 22px;
+  bottom: 220px;
 }
 .name {
   margin-left: 10px;
@@ -217,5 +228,10 @@ p {
 }
 .span {
   float: left;
+}
+.own {
+  position: absolute;
+  right: 22px;
+  bottom: 192px;
 }
 </style>
