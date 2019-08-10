@@ -19,7 +19,7 @@
             label-align-sm="right"
             label-for="nested-state"
           >
-            <b-form-file v-model="user.image" class="mt-3" plain accept=".jpg, .png, .gif, .JPG"></b-form-file>
+            <b-form-file v-model="user.image" class="mt-3" plain accept=".jpg, .png, .gif, .JPG" @change="getImage"></b-form-file>
           </b-form-group>
           <button type="submit" class="btn btn-primary right">送信</button>
         </b-card>
@@ -46,7 +46,10 @@ export default {
   },
   methods: {
     updateUser: function() {
-      axios.patch('/api/settings', this.user)
+      let data = new FormData;
+      data.append('name', this.user.name);
+      data.append('image', this.user.image);
+      axios.patch('/api/settings', data)
         .then(response => {
         console.log("ok");
         this.MyName();
@@ -63,6 +66,10 @@ export default {
       .catch(error => {
         console.error(error);
       })
+    },
+    getImage: function(event) {
+      let file = event.target.file;
+      this.user.image = file;
     }
   }
 }
