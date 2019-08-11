@@ -2,7 +2,7 @@
   <div>
     <div class="marge">
       <div class="item">
-        <img :src="require('../images/' + show_user.image_name)" class="image_test">
+        <img :src="require('../../assets/images/' + show_user.image_name)" class="image_test">
         <b-button variant="outline-primary" pill　class="button_test" v-on:click="follow(show_user.id)" v-if="show_user.fd === 'no_follow'">フォローする</b-button>
         <b-button variant="primary" pill　class="button_test3" v-on:click="remove(show_user.id)" v-if="show_user.fd === 'followed'"  v-b-tooltip.hover.v-danger title="フォロー解除">{{ text }}</b-button>
         <b-button variant="outline-warning" pill　class="button_test2" :class="show_user.fd" :href="'/#/users/' + show_user.id + '/likes'">お気に入り</b-button>
@@ -35,7 +35,7 @@
         <div v-for="tweet in tweets" :key="tweet.id" class="tweet_item">
           <div>
             <div class="user_image">
-              <img :src="require('../images/' + tweet.user_image_name)" class="user_image_item">
+              <img :src="require('../../assets/images/' + tweet.user_image_name)" class="user_image_item">
             </div>
             <div class="right_content">
               <div class="user_name">
@@ -122,7 +122,7 @@ export default {
 
 <style scoped>
 .image_test {
-  width: 130px;
+  height: 130px;
   margin-left: 10px;
   margin-top: 10px;
 }

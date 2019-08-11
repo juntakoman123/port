@@ -2,7 +2,7 @@
   <div>
     <div class="marge">
       <div class="item">
-        <img :src="require('../images/' + login_user.image_name)" class="image_test">
+        <img :src="require('../../assets/images/' + login_user.image_name)" class="image_test">
         <div class="name">
           <router-link :to="{ name: 'UsersShow', params: { id: login_user.id } }" style="color: black;" >{{ login_user.name }}</router-link>
         </div>
@@ -32,7 +32,7 @@
         <div v-for="tweet in tweets" :key="tweet.id" class="tweet_item">
           <div>
             <div class="user_image">
-              <img :src="require('../images/' + tweet.user_image_name)" class="user_image_item">
+              <img :src="require('../../assets/images/' + tweet.user_image_name)" class="user_image_item">
             </div>
             <div class="right_content">
               <div class="user_name">
@@ -94,7 +94,7 @@ export default {
 
 <style scoped>
 .image_test {
-  width: 130px;
+  height: 130px;
   margin-left: 10px;
   margin-top: 10px;
 }
