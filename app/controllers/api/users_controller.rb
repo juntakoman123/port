@@ -13,7 +13,7 @@ class Api::UsersController < ActionController::API
   def index
     i = 0
     a = []
-    u = User.where.not(id: current_user.id)
+    u = User.where.not(id: current_user.id).order(created_at: :desc)
     while i < u.length
       a[i] = {id: u[i].id, user_name: u[i].name,user_image_name: u[i].image_name,fd: "no_follow"}
       a[i][:fd] = "followed" if Follow.find_by(follower_id: current_user,inverse_follower_id: a[i][:id])
@@ -31,7 +31,7 @@ class Api::UsersController < ActionController::API
   def show
     i = 0
     a = []
-    u = Tweet.where(user_id: params[:id])
+    u = Tweet.where(user_id: params[:id]).order(created_at: :desc)
     while i < u.length
       a[i] = {id: u[i].id, content: u[i].content, user_id: u[i].user_id,created_at: u[i].created_at, user_name: u[i].user.name,
       user_image_name: u[i].user.image_name,fav: "far"}
@@ -64,7 +64,7 @@ class Api::UsersController < ActionController::API
     end
   end
 
-  
+
 
 private
 

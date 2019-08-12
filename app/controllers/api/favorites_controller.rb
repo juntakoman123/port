@@ -18,10 +18,11 @@ class Api::FavoritesController < ActionController::API
     i = 0
     a = []
     b = []
-    favs = Favorite.where(user_id: params[:id])
+    favs = Favorite.where(user_id: params[:id]).order(created_at: :desc)
     favs.each do |f|
       b << Tweet.find_by(id: f.tweet_id)
     end
+
 
     while i < b.length
       a[i] = {id: b[i].id, content: b[i].content, user_id: b[i].user_id,created_at: b[i].created_at, user_name: b[i].user.name,

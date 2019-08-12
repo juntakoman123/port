@@ -8,9 +8,8 @@ class Api::TweetsController < ActionController::API
   def index
     i = 0
     a = []
-    t = Tweet.all
+    t = Tweet.order(created_at: :desc)
     while i < Tweet.all.length
-
       a[i] = {id: t[i].id, content: t[i].content, user_id: t[i].user_id,created_at: t[i].created_at, user_name: t[i].user.name,
       user_image_name: t[i].user.image_name,fav: "far"}
       a[i][:fav] = "fas" if Favorite.find_by(user_id: current_user,tweet_id: a[i][:id])
@@ -18,8 +17,6 @@ class Api::TweetsController < ActionController::API
       a[i][:favo_num] = favo_num
       i = i + 1
     end
-
-
     count = Tweet.all.where(user_id: current_user.id).count
     follow_num = Follow.where(follower_id: current_user.id).count
     follower_num = Follow.where(inverse_follower_id: current_user.id).count
@@ -29,7 +26,7 @@ class Api::TweetsController < ActionController::API
   end
 
   def create
-    tweet = Tweet.new(tweet_params)
+    tweet = Tweet.new(content: params[:text],user_id: current_user.id)
     if tweet.save
       render json: tweet, status: :created
     else
@@ -42,17 +39,9 @@ class Api::TweetsController < ActionController::API
     head :no_content
   end
 
-
 private
-
-
-  def tweet_params
-    params.fetch(:tweet, {}).permit(:content, :user_id) # {}はデフォルト
-  end
 
   def render_status_500(exception)
     render json: { errors: [exception] }, status: 500
   end
-
-
 end

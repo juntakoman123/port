@@ -211,7 +211,7 @@ p {
 }
 .tweet_content {
   margin-bottom: 10px;
-  text-indent: -0.25em;
+  text-indent: -0.05em;
 }
 .far{
   color: #c5c5c5;

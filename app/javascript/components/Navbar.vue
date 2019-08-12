@@ -8,7 +8,7 @@
 
     <b-navbar-nav class="ml-auto">
       <b-button
-      v-on:click="test()"
+      v-on:click="showModal = true"
       pill
       variant="outline-warning">
       つぶやく
@@ -20,15 +20,25 @@
         </b-nav-item-dropdown>
     </b-navbar-nav>
   </b-navbar>
+
+  <modal v-if="showModal" @cancel="showModal = false" @ok="showModal = false">
+    <div slot="header">つぶやく</div>
+
+  </modal>
 </div>
 </template>
 
 <script>
 import axios from 'axios'
-import TweetModal from './TweetModal.vue'
+import Modal from './TweetModal.vue'
 export default {
   components: {
-    TweetModal
+    Modal
+  },
+  data: function() {
+    return{
+    showModal: false
+    }
   },
   methods: {
     test: function () {
