@@ -3,7 +3,7 @@ class Api::UsersController < ActionController::API
   def form_authenticity_token # エラー回避
   end
 
-  before_action :set_user, only: [:show,:update]
+
 
   rescue_from Exception, with: :render_status_500
   rescue_from ActiveRecord::RecordNotFound do |exception|
@@ -67,15 +67,6 @@ class Api::UsersController < ActionController::API
 
 
 private
-
-  def set_user
-    @user = User.find(params[:id])
-  end
-
-  def user_params
-    params.fetch(:user, {}).permit(:name, :pass, :email) # {}はデフォルト
-  end
-
   def render_status_500(exception)
     render json: { errors: [exception] }, status: 500
   end

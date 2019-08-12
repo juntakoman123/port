@@ -29,6 +29,8 @@
       </div>
 
       <div class="tweet_main">
+
+        <div class="update" v-on:click="updateTweets()"><span class="update_text">更新する</span></div>
         <div v-for="tweet in tweets" :key="tweet.id" class="tweet_item">
           <div>
             <div class="user_image">
@@ -189,5 +191,22 @@ p {
 }
 .time {
   margin-left: 340px;
+}
+.update {
+  background-color: white;
+  border: 1px solid #f5fbff;
+  height: 50px;
+  font-size: 20px;
+  color: #548fb9;
+  text-align: center;
+  position: relative;
+}
+.update:hover{
+  background-color: #ebedef;
+}
+.update_text {
+  position: absolute;
+  top: 10px;
+  right: 254px;
 }
 </style>

@@ -19,6 +19,8 @@ import UsersFollowingPage from './components/UsersFollowingPage.vue'
 import UsersFollowersPage from './components/UsersFollowersPage.vue'
 import Setting from './components/Setting.vue'
 
+
+
 const router = new VueRouter({
   routes: [
     { path: '/',
@@ -43,7 +45,9 @@ const router = new VueRouter({
   ]
 })
 
+
 Vue.use(VueRouter)
+
 export default {
   router,
   components: {

@@ -23,8 +23,8 @@
 
   <modal v-if="showModal" @cancel="showModal = false" @ok="showModal = false">
     <div slot="header">つぶやく</div>
-
   </modal>
+
 </div>
 </template>
 
