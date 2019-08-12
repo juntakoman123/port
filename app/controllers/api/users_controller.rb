@@ -33,7 +33,7 @@ class Api::UsersController < ActionController::API
     a = []
     u = Tweet.where(user_id: params[:id]).order(created_at: :desc)
     while i < u.length
-      a[i] = {id: u[i].id, content: u[i].content, user_id: u[i].user_id,created_at: u[i].created_at, user_name: u[i].user.name,
+      a[i] = {id: u[i].id, content: u[i].content, user_id: u[i].user_id,created_at: u[i].created_at.strftime("%Y-%m-%d %H:%M"), user_name: u[i].user.name,
       user_image_name: u[i].user.image_name,fav: "far"}
       a[i][:fav] = "fas" if Favorite.find_by(user_id: current_user,tweet_id: a[i][:id])
       favo_num = Favorite.where(tweet_id: a[i][:id]).count

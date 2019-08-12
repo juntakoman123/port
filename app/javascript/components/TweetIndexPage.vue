@@ -43,6 +43,7 @@
               </div>
               <span v-if="tweet.fav === 'far'"class="fa-heart" :class="tweet.fav" v-on:click="addFavo(tweet.id)"> {{tweet.favo_num}}</span>
               <span v-else  class="fa-heart" :class="tweet.fav" v-on:click="deleteFavo(tweet.id)"> {{tweet.favo_num}}</span>
+              <span class="time">{{tweet.created_at}}</span>
             </div>
           </div>
         </div>
@@ -185,5 +186,8 @@ p {
 }
 .span {
   float: left;
+}
+.time {
+  margin-left: 340px;
 }
 </style>
