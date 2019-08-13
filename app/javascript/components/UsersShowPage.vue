@@ -47,6 +47,7 @@
               <span v-if="tweet.fav === 'far'"class="fa-heart" :class="tweet.fav" v-on:click="addFavo(tweet.id)"> {{tweet.favo_num}}</span>
               <span v-else  class="fa-heart" :class="tweet.fav" v-on:click="deleteFavo(tweet.id)"> {{tweet.favo_num}}</span>
               <span class="time">{{tweet.created_at}}</span>
+              <span class="fas fa-trash-alt trash" v-on:click="deleteTweet(tweet.id)" v-if="tweet.belongs === 'own'"></span>
             </div>
           </div>
         </div>
@@ -113,10 +114,16 @@ export default {
         console.error(error)
       })
     },
-    changeText: function() {
-      this.text = "フォロー解除"
+    deleteTweet: function(tweet_id) {
+      axios.delete(`/api/tweets/${tweet_id}`)
+      .then(response => {
+        console.log("delete");
+        this.updateTweets();
+      })
+      .catch(error => {
+        console.error(error)
+      })
     }
-
   }
 }
 </script>
@@ -236,6 +243,13 @@ p {
   bottom: 192px;
 }
 .time {
-  margin-left: 340px;
+  margin-left: 320px;
+}
+.trash {
+  color: #c5c5c5;
+}
+.trash:hover {
+  color: #fd6e8e;
+  cursor : pointer;
 }
 </style>

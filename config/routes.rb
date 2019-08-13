@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   delete 'sessions' => 'sessions#destroy'
 
 # 新規登録ページ
-  resources :signups,only: [:new]
+  resources :signups,only: :new
 
 #  ホーム
   root to: 'tweets#index'
@@ -23,6 +23,11 @@ Rails.application.routes.draw do
 # tweet
   namespace :api, {format: 'json'} do
     resources :tweets, only: [:index,:create,:destroy]
+  end
+
+# タイムライン
+  namespace :api, {format: 'json'} do
+    resources :times, only: :index
   end
 
 # いいね

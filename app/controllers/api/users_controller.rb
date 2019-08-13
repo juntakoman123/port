@@ -38,6 +38,7 @@ class Api::UsersController < ActionController::API
       a[i][:fav] = "fas" if Favorite.find_by(user_id: current_user,tweet_id: a[i][:id])
       favo_num = Favorite.where(tweet_id: a[i][:id]).count
       a[i][:favo_num] = favo_num
+      a[i][:belongs] = "own" if a[i][:user_id] == current_user.id
       i = i + 1
     end
 

@@ -4,6 +4,7 @@
     <b-navbar-nav>
       <b-nav-item href="/#/">ホーム</b-nav-item>
       <b-nav-item href="/#/users">ユーザー一覧</b-nav-item>
+      <b-nav-item href="/#/timeline">タイムライン</b-nav-item>
     </b-navbar-nav>
 
     <b-navbar-nav class="ml-auto">

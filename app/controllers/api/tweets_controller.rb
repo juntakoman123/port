@@ -15,6 +15,7 @@ class Api::TweetsController < ActionController::API
       a[i][:fav] = "fas" if Favorite.find_by(user_id: current_user,tweet_id: a[i][:id])
       favo_num = Favorite.where(tweet_id: a[i][:id]).count
       a[i][:favo_num] = favo_num
+      a[i][:belongs] = "own" if a[i][:user_id] == current_user.id
       i = i + 1
     end
     count = Tweet.all.where(user_id: current_user.id).count
@@ -35,7 +36,13 @@ class Api::TweetsController < ActionController::API
   end
 
   def destroy
-    Tweet.find(params[:id]).destroy!
+    t = Tweet.find_by(id: params[:id])
+    unless t.user_id === current_user.id
+      return
+    end
+    f = Favorite.where(tweet_id: t.id)
+    f.delete_all
+    t.destroy!
     head :no_content
   end
 

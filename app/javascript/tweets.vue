@@ -18,6 +18,7 @@ import UsersShowPage from './components/UsersShowPage.vue'
 import UsersFollowingPage from './components/UsersFollowingPage.vue'
 import UsersFollowersPage from './components/UsersFollowersPage.vue'
 import Setting from './components/Setting.vue'
+import TimeLine from './components/TimeLine.vue'
 
 
 
@@ -41,7 +42,10 @@ const router = new VueRouter({
       component: UsersFollowersPage},
     { path: '/setting',
       name: 'Setting',
-      component: Setting}
+      component: Setting},
+    { path: '/timeline',
+      name: 'TimeLine',
+      component: TimeLine}
   ]
 })
 
