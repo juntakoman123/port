@@ -70,7 +70,7 @@ export default {
   },
     methods: {
     updateTweets: function() {
-      axios.get('/api/tweets.json').then(response => {(this.tweets = response.data[0]);this.login_user = response.data[1]})
+      axios.get('/api/times.json').then(response => {(this.tweets = response.data[0]);this.login_user = response.data[1]})
     },
     addFavo: function(tweet_id) {
       axios.post('/api/favorites', {id: tweet_id})
