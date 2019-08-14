@@ -28,8 +28,10 @@
           </b-form-group>
           <button type="submit" class="btn btn-primary right">送信</button>
         </b-card>
+          <b-button variant="info" class="guest" @click="guest()">ゲスト</b-button>
       </div>
     </b-form>
+
   </div>
 </template>
 
@@ -59,6 +61,10 @@ export default {
             this.errors = error.response.data.errors;
           }
         })
+    },
+    guest: function() {
+      this.user.email = "test@gmail.com";
+      this.user.pass = "123123";
     }
   }
 }
@@ -79,11 +85,17 @@ p{
   width: 340px;
   margin: auto;
   font-size: 15px;
+  position: relative;
 }
 .right {
   margin-left: 220px;
 }
 .error {
   font-size: 10px;
+}
+.guest {
+  position: absolute;
+  left: 160;
+  top: 129;
 }
 </style>
