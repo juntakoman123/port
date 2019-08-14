@@ -31,7 +31,7 @@
       </div>
 
       <div class="tweet_main">
-        <div v-for="tweet in tweets" :key="tweet.id" class="tweet_item">
+        <div v-for="tweet in tweet_items" :key="tweet.id" class="tweet_item">
           <div>
             <div class="user_image">
               <img :src="require('../../assets/images/' + tweet.user_image_name)" class="user_image_item">
@@ -49,6 +49,10 @@
             </div>
           </div>
         </div>
+        <div class="spinner_box" v-if="tweet_items.length > 9">
+          <span class="spinner" v-if="spinner"><Spinner line-bg-color="#FFFFFF" /></span>
+          <span class="end" v-else >これ以上取得できません</span>
+        </div>
       </div>
     </div>
   </div>
@@ -57,16 +61,33 @@
 <script>
 
 import axios from 'axios'
+import Spinner from 'vue-simple-spinner'
 export default {
+  components: {
+    Spinner
+  },
   data: function () {
     return {
       tweets: [],
       show_user: {},
-      text: "フォロー中"
+      text: "フォロー中",
+      tweet_items: [],
+      offset: 20,
+      spinner: true
     }
   },
-  mounted () {
+  watch: {
+    tweets: function() {
+      this.$nextTick(function() {
+        this.flesh();
+      })
+    }
+  },
+  created () {
     this.updateTweets();
+  },
+  mounted () {
+    window.addEventListener('scroll', this.scrolly);
   },
     methods: {
     updateTweets: function() {
@@ -112,8 +133,22 @@ export default {
         console.error(error)
       })
     },
-    changeText: function() {
-      this.text = "フォロー解除"
+    fetch: function (time) {
+      var items = this.tweets.slice(this.offset,this.offset +20)
+      if(this.offset >= this.tweets.length) {
+        this.spinner = false
+      }
+      setTimeout(() => {this.tweet_items.push(...items)},time);
+      this.offset += 20;
+      console.log(this.offset)
+    },
+    scrolly: function () {
+      if ((document.documentElement.scrollTop + document.body.clientHeight) - 68 >= document.body.scrollHeight) {
+        this.fetch(1000);
+      }
+    },
+    flesh: function () {
+      this.tweet_items = this.tweets.slice(0,this.offset)
     }
 
   }
@@ -221,5 +256,19 @@ p {
 }
 .time {
   margin-left: 340px;
+}
+.spinner {
+  position: absolute;
+  top: 10px;
+  right: 280px;
+}
+.spinner_box {
+  background-color: white;
+  border: 1px solid #f5fbff;
+  height: 50px;
+  font-size: 20px;
+  color: #548fb9;
+  text-align: center;
+  position: relative;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="tw">
     <div class="marge">
       <div class="item">
         <img :src="require('../../assets/images/' + login_user.image_name)" class="image_test">
@@ -29,9 +29,8 @@
       </div>
 
       <div class="tweet_main">
-
         <div class="update" v-on:click="updateTweets()"><span class="update_text">更新する</span></div>
-        <div v-for="tweet in tweets" :key="tweet.id" class="tweet_item">
+        <div v-for="tweet in tweet_items" :key="tweet.id" class="tweet_item">
           <div>
             <div class="user_image">
               <img :src="require('../../assets/images/' + tweet.user_image_name)" class="user_image_item">
@@ -50,6 +49,10 @@
             </div>
           </div>
         </div>
+        <div class="spinner_box">
+          <span class="spinner" v-if="spinner"><Spinner line-bg-color="#FFFFFF" /></span>
+          <span class="end" v-else >これ以上取得できません</span>
+        </div>
       </div>
     </div>
   </div>
@@ -57,16 +60,34 @@
 
 <script>
 
+import Spinner from 'vue-simple-spinner'
 import axios from 'axios'
 export default {
+  components: {
+    Spinner
+  },
   data: function () {
     return {
       tweets: [],
-      login_user: {}
+      login_user: {},
+      tweet_items: [],
+      offset: 20,
+      spinner: true
     }
   },
-  mounted () {
+  watch: {
+    tweets: function() {
+      this.$nextTick(function() {
+        this.flesh();
+      })
+    }
+  },
+
+  created () {
     this.updateTweets();
+  },
+  mounted () {
+    window.addEventListener('scroll', this.scrolly);
   },
     methods: {
     updateTweets: function() {
@@ -101,6 +122,23 @@ export default {
       .catch(error => {
         console.error(error)
       })
+    },
+    fetch: function (time) {
+      var items = this.tweets.slice(this.offset,this.offset +20)
+      if(this.offset >= this.tweets.length) {
+        this.spinner = false
+      }
+      setTimeout(() => {this.tweet_items.push(...items)},time);
+      this.offset += 20;
+      console.log(this.offset)
+    },
+    scrolly: function () {
+      if ((document.documentElement.scrollTop + document.body.clientHeight) - 68 >= document.body.scrollHeight) {
+        this.fetch(1000);
+      }
+    },
+    flesh: function () {
+      this.tweet_items = this.tweets.slice(0,this.offset)
     }
   }
 }
@@ -160,6 +198,7 @@ p {
   width: 588px;
   margin-left: 580px;
   margin-top: 70px;
+  padding-bottom: 25px;
 }
 .tweet_item {
   background-color: white;
@@ -226,5 +265,19 @@ p {
 .trash:hover {
   color: #fd6e8e;
   cursor : pointer;
+}
+.spinner {
+  position: absolute;
+  top: 10px;
+  right: 280px;
+}
+.spinner_box {
+  background-color: white;
+  border: 1px solid #f5fbff;
+  height: 50px;
+  font-size: 20px;
+  color: #548fb9;
+  text-align: center;
+  position: relative;
 }
 </style>
