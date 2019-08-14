@@ -23,6 +23,4 @@ class Api::FollowingsController < ActionController::API
     end
     render json: a
   end
-
-
 end

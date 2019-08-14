@@ -150,7 +150,6 @@ export default {
     flesh: function () {
       this.tweet_items = this.tweets.slice(0,this.offset)
     }
-
   }
 }
 </script>

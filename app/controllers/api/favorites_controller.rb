@@ -23,7 +23,6 @@ class Api::FavoritesController < ActionController::API
       b << Tweet.find_by(id: f.tweet_id)
     end
 
-
     while i < b.length
       a[i] = {id: b[i].id, content: b[i].content, user_id: b[i].user_id,created_at: b[i].created_at.strftime("%Y-%m-%d %H:%M"), user_name: b[i].user.name,
       user_image_name: b[i].user.image_name,fav: "far"}
@@ -42,7 +41,6 @@ class Api::FavoritesController < ActionController::API
     user[:fd] = "followed" if Follow.find_by(follower_id: current_user,inverse_follower_id: user[:id])
     user[:fd] = "own" if @user.id == current_user.id
     render json: [a,user]
-
   end
 
 end

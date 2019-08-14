@@ -3,8 +3,6 @@ class Api::UsersController < ActionController::API
   def form_authenticity_token # エラー回避
   end
 
-
-
   rescue_from Exception, with: :render_status_500
   rescue_from ActiveRecord::RecordNotFound do |exception|
     render json: { error: '404 not found' }, status: 404
@@ -65,12 +63,8 @@ class Api::UsersController < ActionController::API
     end
   end
 
-
-
 private
   def render_status_500(exception)
     render json: { errors: [exception] }, status: 500
   end
-
-
 end

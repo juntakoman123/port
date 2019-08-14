@@ -29,5 +29,4 @@ class SessionsController < ActionController::API
     puts logged_in?
   end
 
-
 end

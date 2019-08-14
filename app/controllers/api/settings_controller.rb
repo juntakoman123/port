@@ -14,13 +14,9 @@ class Api::SettingsController < ActionController::API
     if params[:image]
        u.image_name = "#{u.id}.png"
        path = 'app/assets/images/' + u.image_name
-       puts path
-
-
       image = params[:image]
       File.binwrite(path,image.read)
     end
-
     u.name = params[:name]
     u.save :validate => false
     head :no_content

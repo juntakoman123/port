@@ -29,5 +29,4 @@ class Api::TimesController < ActionController::API
     follow_num: follow_num,follower_num: follower_num}
     render json: [a,user]
   end
-
 end
