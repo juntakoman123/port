@@ -1,11 +1,9 @@
 <template>
   <div id="app">
+    <div v-if="errors.length != 0" class="error">
+      <p style="color: red">{{ errors }}</p>
+    </div>
     <b-form @submit.prevent="createSession()">
-      <div v-if="errors.length != 0">
-        <ul v-for="e in errors" :key="e">
-          <li><font color="red">{{ e }}</font></li>
-        </ul>
-      </div>
       <p>{{ message }}</p>
       <div class="card">
         <b-card bg-variant="light">
@@ -84,5 +82,8 @@ p{
 }
 .right {
   margin-left: 220px;
+}
+.error {
+  font-size: 10px;
 }
 </style>

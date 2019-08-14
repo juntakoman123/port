@@ -1,11 +1,11 @@
 <template>
   <div id="app">
-    <b-form @submit.prevent="createUser()">
-    <div v-if="errors.length != 0">
-      <ul v-for="e in errors" :key="e">
-        <li><font color="red">{{ e }}</font></li>
-      </ul>
+  <div v-if="errors.length != 0">
+    <div v-for="e in errors" :key="e" >
+      <p style="color: red" class="error">{{ e }}</p>
     </div>
+  </div>
+    <b-form @submit.prevent="createUser()">
     <p>{{ message }}</p>
     <div class="card">
       <b-card bg-variant="light">
@@ -39,8 +39,7 @@
           <b-form-input id="nested-state"
           placeholder="password"  v-model="user.pass" type="password"></b-form-input>
         </b-form-group>
-
-        <button type="submit" class="btn btn-primary right" >送信</button>
+        <button type="submit" class="btn btn-primary right" :disabled="user.name === '' || user.pass.length < 6 || user.email === ''">送信</button>
       </b-card>
     </div>
     </b-form>
@@ -97,5 +96,10 @@ p{
 }
 .right {
   margin-left: 220px;
+}
+.error {
+  font-size: 10px;
+  text-align: center;
+  margin-top: 10px;
 }
 </style>
