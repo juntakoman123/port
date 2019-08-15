@@ -49,7 +49,7 @@
             </div>
           </div>
         </div>
-        <div class="spinner_box">
+        <div class="spinner_box" v-if="tweet_items.length > 9">
           <span class="spinner" v-if="spinner"><Spinner line-bg-color="#FFFFFF" /></span>
           <span class="end" v-else >これ以上取得できません</span>
         </div>
