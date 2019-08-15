@@ -6,6 +6,7 @@ class SorceryCore < ActiveRecord::Migration[5.2]
       t.string :salt
       t.string :name
       t.timestamps                null: false
+      t.binary :avatar
     end
 
     add_index :users, :email, unique: true
