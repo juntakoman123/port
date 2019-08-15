@@ -1,3 +1,4 @@
+require 'base64'
 class Api::UsersController < ActionController::API
 
   def form_authenticity_token # エラー回避
@@ -13,7 +14,7 @@ class Api::UsersController < ActionController::API
     a = []
     u = User.where.not(id: current_user.id).order(created_at: :desc)
     while i < u.length
-      a[i] = {id: u[i].id, user_name: u[i].name,user_image_name: u[i].image_name,fd: "no_follow"}
+      a[i] = {id: u[i].id, user_name: u[i].name,user_image: Base64.encode64(u[i].avatar),fd: "no_follow"}
       a[i][:fd] = "followed" if Follow.find_by(follower_id: current_user,inverse_follower_id: a[i][:id])
       tweet_num = Tweet.where(user_id: a[i][:id]).count
       a[i][:tweet_num] = tweet_num
@@ -32,7 +33,7 @@ class Api::UsersController < ActionController::API
     u = Tweet.where(user_id: params[:id]).order(created_at: :desc)
     while i < u.length
       a[i] = {id: u[i].id, content: u[i].content, user_id: u[i].user_id,created_at: u[i].created_at.strftime("%Y-%m-%d %H:%M"), user_name: u[i].user.name,
-      user_image_name: u[i].user.image_name,fav: "far"}
+      user_image: Base64.encode64(u[i].user.avatar),fav: "far"}
       a[i][:fav] = "fas" if Favorite.find_by(user_id: current_user,tweet_id: a[i][:id])
       favo_num = Favorite.where(tweet_id: a[i][:id]).count
       a[i][:favo_num] = favo_num
@@ -44,7 +45,7 @@ class Api::UsersController < ActionController::API
     follow_num = Follow.where(follower_id: params[:id]).count
     follower_num = Follow.where(inverse_follower_id: params[:id]).count
     @user = User.find_by(id: params[:id])
-    user = {name: @user.name, image_name: @user.image_name,tweets_count: count,id: @user.id,
+    user = {name: @user.name, user_image: Base64.encode64(@user.avatar),tweets_count: count,id: @user.id,
     follow_num: follow_num,follower_num: follower_num,fd: "no_follow"}
     user[:fd] = "followed" if Follow.find_by(follower_id: current_user,inverse_follower_id: user[:id])
     user[:fd] = "own" if @user.id == current_user.id
@@ -53,7 +54,10 @@ class Api::UsersController < ActionController::API
 
   def create
     user = User.new(name: params[:name],password: params[:pass],email: params[:email])
-    user.image_name = "default.png"
+    File.open('public/default.png') do |file|
+      user.avatar = file.read
+    end
+
     if user.save
       login(params[:email], params[:pass] )
       puts logged_in?

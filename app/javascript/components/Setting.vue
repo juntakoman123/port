@@ -25,6 +25,7 @@
         </b-card>
       </div>
     </b-form>
+    <img :src="previewImageSrc" class="img"/>
   </div>
 </template>
 
@@ -38,7 +39,9 @@ export default {
       user: {
         name: "",
         image: null
-      }
+      },
+      previewImageSrc: null,
+      text: ""
     }
   },
   mounted: function() {
@@ -49,9 +52,10 @@ export default {
       let data = new FormData;
       data.append('name', this.user.name);
       data.append('image', this.user.image);
+      console.log(data)
       axios.patch('/api/settings', data)
         .then(response => {
-        console.log("ok");
+        alert("アップロードしました");
         this.MyName();
         })
         .catch(error => {
@@ -61,15 +65,16 @@ export default {
     MyName: function() {
       axios.get('/api/settings')
       .then(response => {
-        this.myName = response.data
+        this.myName = response.data;
       })
       .catch(error => {
         console.error(error);
       })
     },
     getImage: function(event) {
-      let file = event.target.file;
-      this.user.image = file;
+      let files = event.target.files;
+      this.user.image = files[0];
+      this.previewImageSrc = URL.createObjectURL(this.user.image);
     }
   }
 }
@@ -97,8 +102,12 @@ p{
 .form-group {
   margin-left: -100px;
 }
-.error_message {
-
+.img {
+  height: 130px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
 }
 
 </style>

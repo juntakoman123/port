@@ -1,7 +1,7 @@
 <template>
   <div class="userscontainer">
     <div v-for="(result) in users" :key="result.id" class="item">
-         <img v-bind:src="require('../../assets/images/' + result.user_image_name)" class="image_test">
+         <img :src="'data:image/jpeg;base64,' + result.user_image" class="image_test">
           <b-button variant="outline-primary" pill　class="button_test" v-on:click="follow(result.id)" v-if="result.fd === 'no_follow'">フォローする</b-button>
           <b-button variant="primary" pill　class="button_test" v-on:click="remove(result.id)" v-if="result.fd === 'followed'" v-b-tooltip.hover.v-danger title="フォロー解除">{{ text }}</b-button>
          <div class="name">

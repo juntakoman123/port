@@ -1,3 +1,4 @@
+require 'base64'
 class Api::TimesController < ActionController::API
 
   def index
@@ -15,7 +16,7 @@ class Api::TimesController < ActionController::API
     t = b
     while i < t.length
       a[i] = {id: t[i].id, content: t[i].content, user_id: t[i].user_id,created_at: t[i].created_at.strftime("%Y-%m-%d %H:%M"), user_name: t[i].user.name,
-      user_image_name: t[i].user.image_name,fav: "far"}
+      user_image: Base64.encode64(t[i].user.avatar),fav: "far"}
       a[i][:fav] = "fas" if Favorite.find_by(user_id: current_user,tweet_id: a[i][:id])
       favo_num = Favorite.where(tweet_id: a[i][:id]).count
       a[i][:favo_num] = favo_num
@@ -25,7 +26,7 @@ class Api::TimesController < ActionController::API
     count = Tweet.where(user_id: current_user.id).count
     follow_num = Follow.where(follower_id: current_user.id).count
     follower_num = Follow.where(inverse_follower_id: current_user.id).count
-    user = {name: current_user.name, image_name: current_user.image_name,tweets_count: count,id: current_user.id,
+    user = {name: current_user.name, user_image: Base64.encode64(current_user.avatar),tweets_count: count,id: current_user.id,
     follow_num: follow_num,follower_num: follower_num}
     render json: [a,user]
   end

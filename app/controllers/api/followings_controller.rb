@@ -1,3 +1,4 @@
+require 'base64'
 class Api::FollowingsController < ActionController::API
 
   def show
@@ -10,7 +11,7 @@ class Api::FollowingsController < ActionController::API
     end
 
     while i < b.length
-      a[i] = {id: b[i].id, user_name: b[i].name,user_image_name: b[i].image_name,fd: "no_follow"}
+      a[i] = {id: b[i].id, user_name: b[i].name,user_image: Base64.encode64(b[i].avatar),fd: "no_follow"}
       a[i][:fd] = "followed" if Follow.find_by(follower_id: current_user,inverse_follower_id: a[i][:id])
       a[i][:fd] = "own" if a[i][:id] == current_user.id
       tweet_num = Tweet.where(user_id: a[i][:id]).count
