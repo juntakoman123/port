@@ -54,7 +54,7 @@ class Api::UsersController < ActionController::API
 
   def create
     user = User.new(name: params[:name],password: params[:pass],email: params[:email])
-    File.open('public/default.png') do |file|
+    File.open('app/assets/images/default.png') do |file|
       user.avatar = file.read
     end
 
