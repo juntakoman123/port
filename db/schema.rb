@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_02_010927) do
+ActiveRecord::Schema.define(version: 2019_08_15_151402) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,9 +48,9 @@ ActiveRecord::Schema.define(version: 2019_08_02_010927) do
     t.string "crypted_password"
     t.string "salt"
     t.string "name"
-    t.string "image_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.binary "avatar"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
