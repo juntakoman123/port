@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-cloak>
     <Navbar />
     <div>
       <router-view></router-view>
@@ -60,4 +60,7 @@ export default {
 </script>
 
 <style scoped>
+[v-cloak] {
+  display: none;
+}
 </style>
