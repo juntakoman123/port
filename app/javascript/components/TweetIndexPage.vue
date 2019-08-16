@@ -1,6 +1,6 @@
 <template>
   <div id="tw">
-    <div class="marge">
+    <div class="marge" v-show="show">
       <div class="item">
         <img :src="'data:image/jpeg;base64,' + login_user.user_image" class="image_test">
         <div class="name">
@@ -49,7 +49,7 @@
             </div>
           </div>
         </div>
-        <div class="spinner_box" v-if="tweet_items.length > 9">
+        <div class="spinner_box">
           <span class="spinner" v-if="spinner"><Spinner line-bg-color="#FFFFFF" /></span>
           <span class="end" v-else >これ以上取得できません</span>
         </div>
@@ -72,7 +72,8 @@ export default {
       login_user: {},
       tweet_items: [],
       offset: 20,
-      spinner: true
+      spinner: true,
+      show: false
     }
   },
   watch: {
@@ -88,6 +89,9 @@ export default {
   },
   mounted () {
     window.addEventListener('scroll', this.scrolly);
+    setTimeout(() => {
+      this.loading = false;
+    }, 1000);
   },
     methods: {
     updateTweets: function() {
@@ -139,6 +143,7 @@ export default {
     },
     flesh: function () {
       this.tweet_items = this.tweets.slice(0,this.offset)
+      this.show = true;
     }
   }
 }

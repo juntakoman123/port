@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="marge">
+    <div class="marge" v-show="show">
       <div class="item">
         <img :src="'data:image/jpeg;base64,' + show_user.user_image" class="image_test">
         <b-button variant="outline-primary" pill　class="button_test" v-on:click="follow(show_user.id)" v-if="show_user.fd === 'no_follow'">フォローする</b-button>
@@ -73,7 +73,8 @@ export default {
       text: "フォロー中",
       tweet_items: [],
       offset: 20,
-      spinner: true
+      spinner: true,
+      show: false
     }
   },
   watch: {
@@ -149,6 +150,7 @@ export default {
     },
     flesh: function () {
       this.tweet_items = this.tweets.slice(0,this.offset)
+      this.show = true
     }
   }
 }

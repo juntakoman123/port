@@ -1,6 +1,6 @@
 <template>
   <div id="tw">
-    <div class="marge">
+    <div class="marge" v-show="show">
       <div class="item">
         <img :src="'data:image/jpeg;base64,' + login_user.user_image" class="image_test">
         <div class="name">
@@ -71,7 +71,8 @@ export default {
       login_user: {},
       tweet_items: [],
       offset: 20,
-      spinner: true
+      spinner: true,
+      show: false
     }
   },
   watch: {
@@ -138,6 +139,7 @@ export default {
     },
     flesh: function () {
       this.tweet_items = this.tweets.slice(0,this.offset)
+      this.show = true;
     }
   }
 }
@@ -278,5 +280,8 @@ p {
   color: #548fb9;
   text-align: center;
   position: relative;
+}
+[v-cloak] {
+    display: none;
 }
 </style>
